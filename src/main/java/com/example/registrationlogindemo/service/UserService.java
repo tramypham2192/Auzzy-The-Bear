@@ -13,7 +13,4 @@ public interface UserService {
     User findByID(Long userID);
 
     List<UserDto> findAllUsers();
-//    User findUserWithPendingOrder();
-
-//    Long findUserIDbyEmail(String name);
 }

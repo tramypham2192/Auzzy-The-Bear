@@ -2,7 +2,6 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
->
 <head>
     <meta charset="UTF-8">
     <title>AUZZY THE BEAR</title>
@@ -18,19 +17,9 @@
     </div>
     <nav class="site-navigation">
         <ul class="nav">
-            <div sec:authorize="!hasRole('ROLE_USER')">
-                <li><a th:href="@{/index}"><ion-icon name="home-outline"></ion-icon>Home</a></li>
-                <li><a th:href="@{/aboutUs-contactUs/about}"><ion-icon name="alert-circle-outline"></ion-icon>About</a></li>
-                <li><a th:href="@{/aboutUs-contactUs/contactUs}"><ion-icon name="people-outline"></ion-icon>Contact</a></li>
-                <li><a th:href="@{/product/productList}"><ion-icon name="storefront-outline"></ion-icon>Products</a></li>
-                <li><a th:href="@{/add-to-cart-item}"><ion-icon name="cart"></ion-icon>Cart</a></li>
-                <li><a th:href="@{/login}"><ion-icon name="people-outline"></ion-icon>Sign In</a></li>
-            </div>
-
             <div sec:authorize="hasRole('ROLE_ADMIN')">
                 <li><a th:href="@{/adminHomePage}"><ion-icon name="home-outline"></ion-icon>Home</a></li>
                 <li><a th:href="@{/product/productList}"><ion-icon name="storefront-outline"></ion-icon>Products</a></li>
-                <li><a th:text="${userName}"></a></li>
             </div>
             <div sec:authorize="hasRole('ROLE_USER')">
                 <li><a th:href="@{/index}"><ion-icon name="home-outline"></ion-icon>Home</a></li>
@@ -39,7 +28,6 @@
                 <li><a th:href="@{/product/productList}"><ion-icon name="storefront-outline"></ion-icon>Products</a></li>
                 <li><a th:href="@{/add-to-cart-item}"><ion-icon name="cart"></ion-icon>Cart</a></li>
                 <li><a th:href="@{/logout}"><ion-icon name="people-outline"></ion-icon>Sign Out</a></li>
-                <li><a th:text="${userName}">lll</a></li>
             </div>
         </ul>
     </nav>
@@ -129,7 +117,7 @@
     </div>
 </div>
 <!-- icon io   -->
-<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<!--<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>-->
+<!--<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>-->
 </body>
 </html>

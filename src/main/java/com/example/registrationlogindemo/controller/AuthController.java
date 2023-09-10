@@ -1,11 +1,8 @@
 package com.example.registrationlogindemo.controller;
 
-//import com.example.registrationlogindemo.dto.ItemDto;
 import com.example.registrationlogindemo.dto.CartItemDto;
 import com.example.registrationlogindemo.dto.CartItemProductDto;
 import com.example.registrationlogindemo.dto.UserDto;
-//import com.example.registrationlogindemo.entity.Cart;
-//import com.example.registrationlogindemo.entity.Cart;
 import com.example.registrationlogindemo.entity.*;
 import com.example.registrationlogindemo.service.impl.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,7 +39,6 @@ public class AuthController {
         this.productServiceMySQL = productServiceMySQL;
         this.cartItemService = cartItemService;
         this.orderServiceImpl = orderServiceImpl;
-//        this.cartService = cartService;
         this.userService = userService;
     }
 //------------------------------FOR BOTH ADMIN AND USER ROLE---------------------------------------------------------//
@@ -75,9 +71,9 @@ public class AuthController {
         return "aboutUs-contactUs/contactUs";}
 
     // handler method to handle user registration request
-    @GetMapping("register")
-    public String showRegistrationForm(Model model, Authentication authentication){
-        model.addAttribute("userName", userService.findByEmail(authentication.getName()).getName());
+    @GetMapping("/register")
+    public String showRegistrationForm(Model model){
+        System.out.println("calling get mapping for register");
         UserDto user = new UserDto();
         model.addAttribute("user", user);
         return "register";
@@ -88,6 +84,7 @@ public class AuthController {
     public String registration(@Valid @ModelAttribute("user") UserDto user,
                                BindingResult result,
                                Model model){
+        System.out.println("register/save called");
         User existing = userService.findByEmail(user.getEmail());
         if (existing != null) {
             result.rejectValue("email", null, "There is already an account registered with that email");
@@ -110,7 +107,6 @@ public class AuthController {
 
     @GetMapping("/success")
     public String getSuccessPage(Principal principal){
-        System.out.println("/success getmapping called");
         String username = principal.getName();
         User user = userService.findByEmail(username);
         System.out.println(user.getRoles().get(0).getName());
@@ -121,9 +117,6 @@ public class AuthController {
         }
         return "redirect:/product/productList";
     }
-
-
-
 
     //------------------------------UPLOAD IMAGES---------------------------------------------------------//
 
@@ -151,12 +144,9 @@ public class AuthController {
 
     @GetMapping("/product/productList")
     public String productList(Model model, Authentication authentication){
-//        System.out.println("productList @getmapping called");
         model.addAttribute("productList", productServiceMySQL.all());
         logger.info("size: {}", productServiceMySQL.all().size());
         model.addAttribute("userName", userService.findByEmail(authentication.getName()).getName());
-//        System.out.println("user after log in is: " + authentication.getName());
-//        System.out.println("user after log in is: " + userService.findByEmail(authentication.getName()).getId());
         return "product/productList";
     }
 
@@ -182,14 +172,6 @@ public class AuthController {
         return "product/sortProductsAccordingToMostOrdered";
     }
 
-
-
-
-
-
-
-
-
 //---------------------------------------FOR USER ROLE ONLY---------------------------------------------------------//
 
 
@@ -199,18 +181,13 @@ public class AuthController {
     public String addItemToCart(@RequestBody CartItemDto cartItemDto,
                                 Principal principal, HttpServletRequest request, Model model, Authentication authentication) throws Exception{
         model.addAttribute("userName", userService.findByEmail(authentication.getName()).getName());
-        System.out.println("post mapping add-to-cart called");
-        System.out.println(principal);
         if (principal == null) {
-//            throw new Exception();
             return "redirect:/login";
         }
         String username = principal.getName();
         User user = userService.findByEmail(username);
 
-
         //IF THIS USER HAS A PENDING ORDER
-//        List<CartItem> cartItems = this.cartItemService.all();
         List<Order> ordersOfThisUser = orderServiceImpl.findBUserId(user.getId());
         if (ordersOfThisUser.size() > 0) {
             for (Order o : ordersOfThisUser) {
@@ -234,7 +211,6 @@ public class AuthController {
                         //Case 2: user do not have an existing cart item with this product => new cart item,
                         // -> add this new cart item into existing cart item list
                         // -> update cart item list for the pending order, change pay amount
-                        System.out.println("cart item list inside pending order: " + o.getCartItemsList());
                         for (CartItem ci : o.getCartItemsList()) {
                             System.out.println(ci.getProductID());
                         }
@@ -255,10 +231,8 @@ public class AuthController {
                             System.out.println("quantity: " + cartItem.getProductQuantity() + "price: " + productServiceMySQL.findById(cartItem.getProductID()).getPrice());
                             payAmount += cartItem.getProductQuantity() * productServiceMySQL.findById(cartItem.getProductID()).getPrice();
                         }
-                        System.out.println("pay amount: " + payAmount);
                         //update pay amount for the pending order
                         o.setPayAmount(payAmount);
-                        System.out.println("new pay amount in order: " + o.getPayAmount());
                         //save the changes of new cart item and order
                         orderServiceImpl.update(o, o.getId());
                         cartItemService.save(newCartItem);
@@ -270,46 +244,39 @@ public class AuthController {
             //IF USER NEVER HAD ORDER BEFORE OR ALL HIS/HER ORDERS ARE COMPLETED
             CartItem newCartItem = new CartItem();
             Order newOrder = new Order();
-            //Step 2: new Order
+            //new Order
             //calculate id for new order
-            Calendar cal = Calendar.getInstance();
-            int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
-            int newOrder_id = (int) (user.getId() + dayOfMonth);
+//            Calendar cal = Calendar.getInstance();
+//            int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+//            int newOrder_id = (int) (user.getId() + dayOfMonth);
             //if this order id already exist (user order for the second, third time during the same day,
             //double the string to have the new id
-            if (orderServiceImpl.findByid(newOrder_id) != null) {
-                newOrder_id += newOrder_id + orderServiceImpl.all().size();
-            }
+//            if (orderServiceImpl.findByid(newOrder_id) != null) {
+//                newOrder_id += newOrder_id + orderServiceImpl.all().size();
+//            }
             //creat new CartItemList
             HashSet<CartItem> cartItemsList = new HashSet<>();
             //add newCartItem into cartItemList
-//Step 1: new CartItem
-        //Step 1a: set properties for new CartItem
-            newCartItem.setCartItemID(cartItemDto.getProductID());
+            //new CartItem
+            //set properties for new CartItem
+//            newCartItem.setCartItemID(cartItemDto.getProductID());
             newCartItem.setProductID(cartItemDto.getProductID());
             newCartItem.setUser(user);
             newCartItem.setProductQuantity(cartItemDto.getProductQuantity());
             newCartItem.setOrder(newOrder);
             cartItemsList.add(newCartItem);
 
-
             //set properties for new Order
             newOrder.setCartItemsList(cartItemsList);
-            newOrder.setId(newOrder_id);
+//            newOrder.setId(newOrder_id);
             newOrder.setUser(user);
             newOrder.setDateAndTimeOfOrder(LocalDateTime.now());
             int totalAmount = 0;
-//            if (newOrder.getCartItemsList().size() == 1){
-//                totalAmount = cartItemDto.getProductQuantity() * this.productServiceMySQL.findById(cartItemDto.getProductID()).getPrice();
-//                System.out.println(totalAmount);
-//            } else
-//            {
-                for (CartItem c : newOrder.getCartItemsList()){
-                    System.out.println(c.getProductID());
-                    totalAmount = c.getProductQuantity() * this.productServiceMySQL.findById(c.getProductID()).getPrice();
-                }
-//            }
 
+            for (CartItem c : newOrder.getCartItemsList()){
+                System.out.println(c.getProductID());
+                totalAmount = c.getProductQuantity() * this.productServiceMySQL.findById(c.getProductID()).getPrice();
+            }
             newOrder.setPayAmount(totalAmount);
             newOrder.setStatus("pending");
 
@@ -317,24 +284,13 @@ public class AuthController {
             this.orderServiceImpl.save(newOrder);
             //save new cart item
             this.cartItemService.save(newCartItem); //this line must be here, not on line 272 because it will cause error save item before flushing ...
-
-
-            System.out.println("add new cart item to database");
-
-            //Step 2: create CartItemsList and add newCartItem into hashset
-//        if  (orderServiceImpl.findBUserId(user.getId()) != null && orderServiceImpl.findBUserId(user.getId()).getCartItemsList().size() != 0){
-//            Set<CartItem> cartItemsList = orderServiceImpl.findBUserId(user.getId()).getCartItemsList();
-//            cartItemsList.add(newCartItem);
-//            newOrder.setCartItemsList(cartItemsList);
-//        }
         return "/product/productList";
     }
-
 
     @GetMapping("/add-to-cart-item")
     public String cartItemDisplay(Principal principal, Model model, Authentication authentication){
         model.addAttribute("userName", userService.findByEmail(authentication.getName()).getName());
-        List<CartItem> cartItems = this.cartItemService.all();
+//        List<CartItem> cartItems = this.cartItemService.all();
         List<CartItemProductDto> cartItemProductDtoList = new ArrayList<>();
         //get customer's name
         String username = principal.getName();
@@ -347,26 +303,21 @@ public class AuthController {
             for (CartItem c : pendingOrder.getCartItemsList()){
                 Product p = this.productServiceMySQL.findById(c.getProductID());
                 CartItemProductDto cartItemProductDto = new CartItemProductDto(c.getProductID(), p.getName(), p.getPrice(), c.getProductQuantity());
-                System.out.println(cartItemProductDto.getProductID());
-                System.out.println(cartItemProductDto.getProductName());
                 cartItemProductDtoList.add(cartItemProductDto);
             }
         }
-
         model.addAttribute("cartItemProductDtoList", cartItemProductDtoList);
         //get add to cart date
         LocalDateTime myDateObj = LocalDateTime.now();
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDate = myDateObj.format(myFormatObj);
         model.addAttribute("date", formattedDate);
-
         logger.info("cartItemProductDtoList size: {}", cartItemProductDtoList.size());
         return "add-to-cart-item";
     }
 
     @PostMapping("/checkout")
     public String PostMappingCheckOut(Principal principal){
-        System.out.println("post mapping checkout called");
         //find user
         String username = principal.getName();
         User user = userService.findByEmail(username);
@@ -395,9 +346,7 @@ public class AuthController {
 
     @GetMapping("/adminHomePage")
     public String listRegisteredUsers(Model model){
-        System.out.println("calling @getmapping(/adminHomePage)");
         List<UserDto> users = userService.findAllUsers();
-        System.out.println("users" + users);
         model.addAttribute("users", users);
         return "adminHomePage";
     }

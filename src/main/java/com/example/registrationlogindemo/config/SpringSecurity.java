@@ -15,7 +15,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SpringSecurity {
-
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -26,17 +25,12 @@ public class SpringSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
         http.csrf().disable()
-//                .requestCache((cache) -> cache
-                        //disable RequestCache in spring boot. if not disable, after hit the log in button,
-                        //instead of go to /users, it will redirect to /?continue
-//                        .requestCache(new NullRequestCache()))
-                        .authorizeHttpRequests((authorize) ->
-                                authorize.requestMatchers("/register/**", "/aboutUs-contactUs/about", "/aboutUs-contactUs/contactUs", "/css/**", "/images/**", "/js/**", "/static/images/upload-dir/**", "/register/save", "/product/test").permitAll()
-                                .requestMatchers("/index", "/success", "/login", "/", "/product/productList", "/product/listOfProducts", "/product/displayProductInCard", "/uploadForm", "/cartItemDisplay", "/add-to-cart-item", "/product/productListWithKeywordSearch", "/product/productListWithKeywordSearch/{keyword}/**", "/product/sortProductsFromCheapestToMostExpensive", "/product/sortProductsAccordingToMostOrdered").permitAll()
-                                .requestMatchers( "/checkout", "/", "/cartItem", "/add-to-cart-item", "/checkout", "/orderCompleted", "/indexUser").hasRole("USER")
-                                .requestMatchers("/adminHomePage", "/product/addProduct", "/product/editProduct", "/product/deleteProduct", "/product", "/delete/{productId}", "/update/{productId}/**", "/update/**", "/update").hasRole("ADMIN")
+                .authorizeHttpRequests((authorize) ->
+                        authorize.requestMatchers("/register", "/aboutUs-contactUs/about", "/aboutUs-contactUs/contactUs", "/css/**", "/images/**", "/js/**", "/static/images/upload-dir/**", "/register/save", "/product/test").permitAll()
+                        .requestMatchers("/index", "/success", "/login", "/", "/product/productList", "/product/listOfProducts", "/product/displayProductInCard", "/uploadForm", "/cartItemDisplay", "/add-to-cart-item", "/product/productListWithKeywordSearch", "/product/productListWithKeywordSearch/{keyword}/**", "/product/sortProductsFromCheapestToMostExpensive", "/product/sortProductsAccordingToMostOrdered").permitAll()
+                        .requestMatchers( "/checkout", "/", "/cartItem", "/add-to-cart-item", "/checkout", "/orderCompleted", "/indexUser").hasRole("USER")
+                        .requestMatchers("/adminHomePage", "/product/addProduct", "/product/editProduct", "/product/deleteProduct", "/product", "/delete/{productId}", "/update/{productId}/**", "/update/**", "/update").hasRole("ADMIN")
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")

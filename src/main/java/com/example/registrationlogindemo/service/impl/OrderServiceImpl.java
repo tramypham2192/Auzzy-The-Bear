@@ -66,6 +66,5 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository.save(orderToUpdate);
         return orderToUpdate;
     }
-
 }
 

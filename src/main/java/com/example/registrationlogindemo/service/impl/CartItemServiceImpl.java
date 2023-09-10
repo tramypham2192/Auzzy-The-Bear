@@ -30,7 +30,6 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public List<CartItem> all() {
-
         return (List<CartItem>) this.cartItemRepository.findAll();
     }
 
@@ -52,7 +51,6 @@ public class CartItemServiceImpl implements CartItemService {
         }
         CartItem cartItemtToFind = cartItemToFindOptional.get();
         cartItemtToFind.setCartItemID(item.getCartItemID());
-//        cartItemtToFind.setCart(item.getCart());
         cartItemtToFind.setUser(item.getUser());
         cartItemtToFind.setProductQuantity(item.getProductQuantity());
         cartItemtToFind.setProductID(item.getProductID());

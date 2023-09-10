@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
-
     private UserRepository userRepository;
     private RoleRepository roleRepository;
     private PasswordEncoder passwordEncoder;
@@ -35,7 +34,6 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userDto.getEmail());
 
         //encrypt the password once we integrate spring security
-        //user.setPassword(userDto.getPassword());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         Role role = roleRepository.findByName("ROLE_USER");
         if(role == null){
@@ -44,6 +42,8 @@ public class UserServiceImpl implements UserService {
         user.setRoles(Arrays.asList(role));
         userRepository.save(user);
     }
+
+
 
     @Override
     public User findByEmail(String email) {
@@ -64,11 +64,6 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
     }
 
-//    @Override
-//    public Long findUserIDbyEmail(String email) {
-//        return userRepository.findByEmail(email).getId();
-//    }
-
     private UserDto convertEntityToDto(User user){
         UserDto userDto = new UserDto();
         String[] name = user.getName().split(" ");
@@ -84,7 +79,5 @@ public class UserServiceImpl implements UserService {
         return roleRepository.save(role);
     }
 
-//    public User findUserWithPendingOrder(){
-//        return userRepository.findUserWithPendingOrder();
-//    };
+
 }

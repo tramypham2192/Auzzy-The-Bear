@@ -12,7 +12,6 @@ public interface CartItemService {
     List<CartItem> all();
     CartItem findById(int itemId);
     CartItem update(CartItem item);
-
     List<Product> topThreeMostOrderedProduct();
 }
 

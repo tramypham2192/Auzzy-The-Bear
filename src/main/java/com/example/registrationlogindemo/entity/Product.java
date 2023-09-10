@@ -7,15 +7,14 @@ import jakarta.persistence.*;
 public class Product {
     @Id
     @Column(name = "productID", nullable = false)
-    @GeneratedValue
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id = 0;
     @Column(name="name")
     private String name;
     @Column(name="price")
     private int price;
     @Column(name="description")
     private String description;
-
     @Column(nullable = true, length = 64)
     private String imageURL;
 

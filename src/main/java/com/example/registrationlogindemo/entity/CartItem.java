@@ -17,8 +17,8 @@ import org.hibernate.annotations.Cascade;
 
 public class CartItem {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cartItemID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int cartItemID = 0;
 
     private int productID;
     // if not set up the relationship between Product table and CartItem table, we can retrieve product
