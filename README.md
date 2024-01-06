@@ -1,17 +1,20 @@
-# Auzzy The Bear is an ecommerce website I made for a business in Los Gatos, CA
+# Auzzy The Bear is an e-commerce website I made for a business in Los Gatos, CA
 
 ### Tech Stack
 - Front end: HTML, CSS, Javascript, AJAX, JSON, Bootstrap, Thymeleaf
 - Back end: Spring Boot JPA, Spring Boot Security
 
-### What admin role can do?
-- Add/Edit/Delete/Browse products
+### Functions for Admin role
+- Add products
+- Edit products
+- Delete products
+- Browse products
 - Retrieve order information and user information from the database
 
-### What user role can do?
+### Functions for User role
 - Browse products 
-- Add products to cart
-- Change quantiy of products in cart
+- Add products to the cart
+- Change the quantity of products in the cart
 - Complete the order
 
 
