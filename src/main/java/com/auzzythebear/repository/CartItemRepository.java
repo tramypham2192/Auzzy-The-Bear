@@ -1,4 +1,4 @@
-package com.entity;
+package com.auzzythebear.repository;
 
 import com.auzzythebear.entity.CartItem;
 import com.auzzythebear.entity.Product;
