@@ -1,10 +1,10 @@
+package com.auzzythebear.repository;
+
 import com.auzzythebear.entity.Product;
 import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface ProductRepository extends CrudRepository<Product, Integer> {
   Product findByid(int id);
 
