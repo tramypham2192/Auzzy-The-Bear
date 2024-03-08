@@ -12,9 +12,6 @@ services:
       MYSQL_PASSWORD: '123456'
       # Password for root access
       MYSQL_ROOT_PASSWORD: '123456'
-    ports:
-      # <Port exposed> : <MySQL Port running inside container>
-      - '3306:3306'
     expose:
       # Opens port 3306 on the container
       - '3306'
@@ -31,6 +28,7 @@ services:
       MYSQL_PASSWORD: '123456'
       # Password for root access
       MYSQL_ROOT_PASSWORD: '123456'
+      DATABASE_ADDRESS: 'my_mysql'
     ports:
       - "8080:8080"
     build:
