@@ -18,6 +18,7 @@ public class CartItem {
   private int cartItemID = 0;
 
   private int productID;
+
   // if not set up the relationship between Product table and CartItem table, we can retrieve
   // product
   // info from Product table with the product id inside CartItem table. But in order to cross-check
@@ -25,8 +26,8 @@ public class CartItem {
   // we should set up the relationship between Product table and Cart Item table. In this project, I
   // will just use the productID
   // to retrieve product info, not setting up the relationship
-  @OneToOne(fetch = FetchType.EAGER, mappedBy = "cartItem")
-  private Product product;
+  //  @OneToOne(fetch = FetchType.EAGER, mappedBy = "cartItem")
+  //  private Product product;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")

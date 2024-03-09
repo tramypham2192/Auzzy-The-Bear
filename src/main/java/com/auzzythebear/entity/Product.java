@@ -16,15 +16,15 @@ public class Product {
   @Column(name = "price")
   private int price;
 
-  @Column(name = "description")
+  @Column(name = "description", length = 65555)
   private String description;
 
-  @Column(nullable = true, length = 64)
+  @Column(nullable = true, length = 65555)
   private String imageURL;
 
-  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-  @JoinColumn(name = "cart_item_id", referencedColumnName = "cartItemID")
-  private CartItem cartItem;
+  //  @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  //  @JoinColumn(name = "cart_item_id", referencedColumnName = "cartItemID")
+  //  private CartItem cartItem;
 
   public Product() {}
   ;
@@ -58,6 +58,7 @@ public class Product {
   public String getDescription() {
     return description;
   }
+
   //    @Transient
   public String getImageURL() {
     if (imageURL == null) return null;
