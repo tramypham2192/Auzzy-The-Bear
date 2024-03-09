@@ -74,14 +74,24 @@ public class AuthController {
   }
 
   @GetMapping("/aboutUs-contactUs/about")
-  public String about(Model model, Authentication authentication) {
-    model.addAttribute("userName", userService.findByEmail(authentication.getName()).getName());
+  // allow only user to access the /about route
+//  public String about(Model model, Authentication authentication) {
+//    model.addAttribute("userName", userService.findByEmail(authentication.getName()).getName());
+//    return "aboutUs-contactUs/about";
+//  }
+
+  //allow non-user to access the /about route
+  public String about(Model model) {
     return "aboutUs-contactUs/about";
   }
 
   @GetMapping("/aboutUs-contactUs/contactUs")
-  public String contactUs(Model model, Authentication authentication) {
-    model.addAttribute("userName", userService.findByEmail(authentication.getName()).getName());
+//  public String contactUs(Model model, Authentication authentication) {
+//    model.addAttribute("userName", userService.findByEmail(authentication.getName()).getName());
+//    return "aboutUs-contactUs/contactUs";
+//  }
+
+  public String contactUs(Model model) {
     return "aboutUs-contactUs/contactUs";
   }
 
@@ -132,8 +142,7 @@ public class AuthController {
     return "redirect:/product/productList";
   }
 
-  // ------------------------------UPLOAD
-  // IMAGES---------------------------------------------------------//
+  // ------------------------------UPLOAD IMAGES---------------------------------------------------------//
 
   @GetMapping("/uploadForm")
   public String indexPage() {
@@ -149,8 +158,7 @@ public class AuthController {
     return Files.readAllBytes(serverFile.toPath());
   }
 
-  // ------------------------------DISPLAY
-  // PRODUCTS---------------------------------------------------------//
+  // ------------------------------DISPLAY PRODUCTS---------------------------------------------------------//
 
   @GetMapping("/product/displayProductInCard")
   public String displayProductInCard() {
@@ -159,10 +167,16 @@ public class AuthController {
   }
 
   @GetMapping("/product/productList")
-  public String productList(Model model, Authentication authentication) {
+//  public String productList(Model model, Authentication authentication) {
+//    model.addAttribute("productList", productServiceMySQL.all());
+//    logger.info("size: {}", productServiceMySQL.all().size());
+//    model.addAttribute("userName", userService.findByEmail(authentication.getName()).getName());
+//    return "product/productList";
+//  }
+
+  public String productList(Model model) {
     model.addAttribute("productList", productServiceMySQL.all());
     logger.info("size: {}", productServiceMySQL.all().size());
-    model.addAttribute("userName", userService.findByEmail(authentication.getName()).getName());
     return "product/productList";
   }
 
