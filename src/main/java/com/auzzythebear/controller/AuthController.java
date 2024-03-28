@@ -204,10 +204,8 @@ public class AuthController {
     return "product/sortProductsAccordingToMostOrdered";
   }
 
-  // ---------------------------------------FOR USER ROLE
-  // ONLY---------------------------------------------------------//
+  // ---------------------------------------FOR USER ROLE ONLY---------------------------------------------------------//
 
-  // my pham
   @CrossOrigin()
   @PostMapping("/add-to-cart-item")
   public String addItemToCart(

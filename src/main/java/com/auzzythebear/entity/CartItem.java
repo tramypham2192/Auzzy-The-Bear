@@ -26,8 +26,8 @@ public class CartItem {
   // we should set up the relationship between Product table and Cart Item table. In this project, I
   // will just use the productID
   // to retrieve product info, not setting up the relationship
-  //  @OneToOne(fetch = FetchType.EAGER, mappedBy = "cartItem")
-  //  private Product product;
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "cartItem")
+    private Product product;
 
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "user_id")
